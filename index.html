@@ -5,12 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Investment Calculator</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="./calculator.js"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-      };
-    </script>
   </head>
   <body
     class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-6"
@@ -60,7 +54,7 @@
       </div>
 
       <button
-        onclick="calculateInvestment()"
+        id="calculate-btn"
         class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded"
       >
         Calculate
@@ -71,7 +65,7 @@
           <thead class="bg-gray-700">
             <tr>
               <th class="px-4 py-2">Year</th>
-              <th class="px-4 py-2">Starting Balance ($)</th>
+              <th class="px-4 py-2">Investment</th>
               <th class="px-4 py-2">Contribution ($)</th>
               <th class="px-4 py-2">Interest ($)</th>
               <th class="px-4 py-2">End Balance ($)</th>
@@ -83,5 +77,6 @@
         </table>
       </div>
     </div>
+    <script src="./calculator.js"></script>
   </body>
 </html>
