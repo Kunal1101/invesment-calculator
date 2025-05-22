@@ -1,18 +1,5 @@
-type InvestmentData = {
-  initialAmount: number;
-  annualContibution: number;
-  expectedReturn: number;
-  duration: number;
-};
+import { CalculationResult, InvestmentData, InvestmentResult } from "./types";
 
-type InvestmentResult = {
-  year: string;
-  totalAmount: number;
-  totalContribution: number;
-  totalInterestEarned: number;
-};
-
-type CalculationResult = InvestmentResult[] | string;
 const calculateInvestment = (data: InvestmentData): CalculationResult => {
   const { initialAmount, annualContibution, expectedReturn, duration } = data;
   if (initialAmount < 0) return "Initial amount must be more then 0";
