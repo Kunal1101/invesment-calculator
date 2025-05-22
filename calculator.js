@@ -1,45 +1,52 @@
 "use strict";
 const calculateInvestment = (data) => {
-    const { initialAmount, annualContibution, expectedReturn, duration } = data;
+    const { initialAmount, annualContribution, expectedReturn, duration } = data;
     if (initialAmount < 0)
-        return "Initial amount must be more then 0";
+        return "Initial amount must be more than 0";
     if (duration <= 0)
         return "No valid years";
     if (expectedReturn <= 0)
-        return "Expected return must be more then 0";
+        return "Expected return must be more than 0";
     let total = initialAmount;
     let totalContribution = 0;
     let totalInterestEarned = 0;
     const annualResults = [];
     for (let i = 0; i < duration; i++) {
-        total = total * (1 + expectedReturn);
+        total = total * (1 + expectedReturn / 100);
+        totalContribution += annualContribution;
+        total += annualContribution;
         totalInterestEarned = total - totalContribution - initialAmount;
-        totalContribution = totalContribution + annualContibution;
-        total = total + annualContibution;
         annualResults.push({
             year: `Year ${i + 1}`,
             totalAmount: total,
-            totalInterestEarned,
             totalContribution,
+            totalInterestEarned,
         });
     }
     return annualResults;
 };
 const printResults = (results) => {
-    if (typeof results === "string")
-        return console.log(results);
+    if (typeof results === "string") {
+        console.log(results);
+        return;
+    }
     for (const yearEndResults of results) {
         console.log(yearEndResults.year);
-        console.log(`Total: ${yearEndResults.totalAmount.toFixed(0)}`);
-        console.log(`Total Contribution: ${yearEndResults.totalContribution.toFixed(0)}`);
-        console.log(`Total Interest Earned: ${yearEndResults.totalInterestEarned.toFixed(0)}`);
+        console.log(`Total: $${yearEndResults.totalAmount.toFixed(2)}`);
+        console.log(`Total Contribution: $${yearEndResults.totalContribution.toFixed(2)}`);
+        console.log(`Total Interest Earned: $${yearEndResults.totalInterestEarned.toFixed(2)}`);
+        console.log("-----");
     }
 };
-const investmentData = {
-    initialAmount: 5000,
-    annualContibution: 500,
-    expectedReturn: 0.08,
-    duration: 10,
-};
-const results = calculateInvestment(investmentData);
-printResults(results);
+const button = document.querySelector("#calculate-btn");
+button?.addEventListener("click", () => {
+    console.log("click");
+    const investmentData = {
+        initialAmount: Number(document.querySelector("#initial")?.value),
+        annualContribution: Number(document.querySelector("#contribution")?.value),
+        expectedReturn: Number(document.querySelector("#return")?.value),
+        duration: Number(document.querySelector("#duration")?.value),
+    };
+    const results = calculateInvestment(investmentData);
+    printResults(results);
+});
