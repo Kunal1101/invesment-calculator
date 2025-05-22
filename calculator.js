@@ -17,7 +17,7 @@ const calculateInvestment = (data) => {
         total += annualContribution;
         totalInterestEarned = total - totalContribution - initialAmount;
         annualResults.push({
-            year: `Year ${i + 1}`,
+            year: `${i + 1}`,
             totalAmount: total,
             totalContribution,
             totalInterestEarned,
@@ -25,21 +25,30 @@ const calculateInvestment = (data) => {
     }
     return annualResults;
 };
-const printResults = (results) => {
+const appendResults = (results) => {
+    const table = document.querySelector("#resultTable");
+    table.innerHTML = ""; // Clear previous results
     if (typeof results === "string") {
-        console.log(results);
+        table.innerHTML = `
+      <tr>
+        <td colspan="5" class="px-4 py-2 text-red-400 text-center">${results}</td>
+      </tr>
+    `;
         return;
     }
-    for (const yearEndResults of results) {
-        console.log(yearEndResults.year);
-        console.log(`Total: $${yearEndResults.totalAmount.toFixed(2)}`);
-        console.log(`Total Contribution: $${yearEndResults.totalContribution.toFixed(2)}`);
-        console.log(`Total Interest Earned: $${yearEndResults.totalInterestEarned.toFixed(2)}`);
-        console.log("-----");
+    for (const result of results) {
+        table.innerHTML += `
+      <tr>
+        <td class="px-4 py-2">${result.year}</td>
+        <td class="px-4 py-2">${result.totalAmount.toFixed(2)}</td>
+        <td class="px-4 py-2">${result.totalContribution.toFixed(2)}</td>
+        <td class="px-4 py-2">${result.totalInterestEarned.toFixed(2)}</td>
+      </tr>
+    `;
     }
 };
 const button = document.querySelector("#calculate-btn");
-button?.addEventListener("click", () => {
+button.addEventListener("click", () => {
     console.log("click");
     const investmentData = {
         initialAmount: Number(document.querySelector("#initial")?.value),
@@ -48,5 +57,5 @@ button?.addEventListener("click", () => {
         duration: Number(document.querySelector("#duration")?.value),
     };
     const results = calculateInvestment(investmentData);
-    printResults(results);
+    appendResults(results);
 });
